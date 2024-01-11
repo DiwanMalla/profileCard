@@ -5,7 +5,7 @@ const home = () => {
         id="outer"
         className="m-6 border border-solid border-black border-2 w-[350px]"
       >
-        <img src="src/images/img1.jpg"></img>
+        <img src="/img1.jpg"></img>
         <div id="text" className=" m-3">
           <h1
             className="bg-blue-200"
