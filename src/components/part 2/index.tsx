@@ -36,7 +36,7 @@ const PartTwo = () => {
                     style={
                       currentIndex == index
                         ? { background: "blue", color: "white" }
-                        : null
+                        : { background: "gray", color: "black" }
                     }
                   >
                     {number}
