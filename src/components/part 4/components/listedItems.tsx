@@ -33,14 +33,22 @@ const ListedItems = () => {
       .then((data) => {
         setListedItem(data);
       });
-  }, [listedItem]);
+  }, []);
 
-  const handleCheckbox = async (itemId: number) => {
-    await fetch(`https://retoolapi.dev/GtUvs2/data/${itemId}`, {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ packed: true }),
+  const handleCheckbox = (itemId: number) => {
+    const updatedItem = listedItem.map((item) => {
+      if (item.id === itemId) {
+        const updatedItem = { ...item, packed: !item.packed };
+        fetch(`https://retoolapi.dev/GtUvs2/data/${itemId}`, {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ packed: updatedItem.packed }),
+        });
+        return updatedItem;
+      }
+      return item;
     });
+    setListedItem(updatedItem);
   };
   return (
     <div>
