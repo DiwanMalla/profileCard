@@ -8,7 +8,7 @@ const header = () => {
         >
           <img src="coconutTree.png" className="h-[100px]"></img>
           <h2
-            className="mt-5 text-3xl sm:text-5xl"
+            className="mt-5 text-5xl"
             style={{
               fontFamily: "Devinyl Line Trial,sans-serif",
             }}

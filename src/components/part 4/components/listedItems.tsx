@@ -1,14 +1,77 @@
+import { useEffect, useState } from "react";
+
 const options = [
   "Sort By Added",
   "Sort By Item Alphabet",
   "Sort By Packed Status",
 ];
-const listedItems = () => {
+interface item {
+  id: number;
+  Description: string;
+  Quantity: number;
+  packed: boolean;
+}
+
+const ListedItems = () => {
+  const [listedItem, setListedItem] = useState<item[]>([]);
+
+  const handleDelete = async (itemId: number) => {
+    try {
+      await fetch(`https://retoolapi.dev/GtUvs2/data/${itemId}`, {
+        method: "DELETE",
+      });
+    } catch (error) {
+      console.error("Error deleting item:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetch("https://retoolapi.dev/GtUvs2/data")
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        setListedItem(data);
+      });
+  }, [listedItem]);
+
+  const handleCheckbox = async (itemId: number) => {
+    await fetch(`https://retoolapi.dev/GtUvs2/data/${itemId}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ packed: true }),
+    });
+  };
   return (
     <div>
       <div id="wrapper" className="" style={{ backgroundColor: "#802b00" }}>
-        <div className="text-white text-center h-[500px]">
-          <h2>Items</h2>
+        <div className="text-white text-center h-[500px] flex justify-center gap-6">
+          {listedItem.map((items) => (
+            <div key={items.id} className="">
+              <input
+                type="checkbox"
+                className="m-2"
+                checked={items.packed}
+                onChange={() => {
+                  handleCheckbox(items.id);
+                }}
+              />
+              <span
+                style={
+                  items.packed
+                    ? { textDecoration: "line-through" }
+                    : { textDecoration: "none" }
+                }
+              >{`${items.Quantity} ${items.Description}`}</span>
+              <button
+                onClick={() => {
+                  handleDelete(items.id);
+                }}
+              >
+                ❌
+              </button>
+            </div>
+          ))}
         </div>
         <div className="flex gap-3 justify-center ">
           <select
@@ -39,4 +102,4 @@ const listedItems = () => {
   );
 };
 
-export default listedItems;
+export default ListedItems;

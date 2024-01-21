@@ -12,7 +12,9 @@ const Footer = () => {
         }}
       >
         <p>
-          You have {count} items on your list, and you already packed 0 (0%)
+          <em>
+            You have {count} items on your list, and you already packed 0 (0%)
+          </em>
         </p>
       </div>
     </div>
