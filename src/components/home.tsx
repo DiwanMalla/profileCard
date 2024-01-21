@@ -1,9 +1,11 @@
-import PartThree from "./part 3";
+import TaskList from "./part 4";
+
 const home = () => {
   return (
     <div>
       {/* <ProfileCard /> */}
-      <PartThree />
+      {/* <PartThree /> */}
+      <TaskList />
     </div>
   );
 };
