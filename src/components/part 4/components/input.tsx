@@ -2,8 +2,11 @@ import { useState } from "react";
 
 const options = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
-const TripList = ({ onItemAdd }) => {
-  const [Quantity, setQuantity] = useState();
+interface TripListProps {
+  onItemAdd: () => void;
+}
+const TripList = ({ onItemAdd }: TripListProps) => {
+  const [Quantity, setQuantity] = useState<number>();
   const [Description, setDescription] = useState("");
 
   const HandleSubmit = (e: { preventDefault: () => void }) => {

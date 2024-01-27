@@ -12,7 +12,11 @@ interface item {
   packed: boolean;
 }
 
-const ListedItems = ({ refreshList, refreshWindow }) => {
+interface ListedItemProps {
+  refreshList: () => void;
+  refreshWindow: boolean;
+}
+const ListedItems = ({ refreshList, refreshWindow }: ListedItemProps) => {
   const [listedItem, setListedItem] = useState<item[]>([]);
 
   const handleDelete = async (itemId: number) => {
