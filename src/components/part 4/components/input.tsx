@@ -2,8 +2,8 @@ import { useState } from "react";
 
 const options = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
-const TripList = () => {
-  const [Quantity, setQuantity] = useState<number | undefined>();
+const TripList = ({ onItemAdd }) => {
+  const [Quantity, setQuantity] = useState();
   const [Description, setDescription] = useState("");
 
   const HandleSubmit = (e: { preventDefault: () => void }) => {
@@ -14,6 +14,8 @@ const TripList = () => {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(itemDetails),
+      }).then(() => {
+        onItemAdd();
       });
     });
   };
@@ -34,7 +36,6 @@ const TripList = () => {
             value={Quantity}
             onChange={(e) => {
               setQuantity(Number(e.target.value));
-              alert(Quantity);
             }}
           >
             {options.map((option, index) => (

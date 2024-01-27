@@ -12,7 +12,7 @@ interface item {
   packed: boolean;
 }
 
-const ListedItems = () => {
+const ListedItems = ({ refreshList, refreshWindow }) => {
   const [listedItem, setListedItem] = useState<item[]>([]);
 
   const handleDelete = async (itemId: number) => {
@@ -20,6 +20,7 @@ const ListedItems = () => {
       await fetch(`https://retoolapi.dev/GtUvs2/data/${itemId}`, {
         method: "DELETE",
       });
+      refreshList();
     } catch (error) {
       console.error("Error deleting item:", error);
     }
@@ -33,7 +34,7 @@ const ListedItems = () => {
       .then((data) => {
         setListedItem(data);
       });
-  }, []);
+  }, [refreshWindow]);
 
   const handleCheckbox = (itemId: number) => {
     const updatedItem = listedItem.map((item) => {
