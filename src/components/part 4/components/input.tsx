@@ -6,7 +6,7 @@ interface TripListProps {
   onItemAdd: () => void;
 }
 const TripList = ({ onItemAdd }: TripListProps) => {
-  const [Quantity, setQuantity] = useState<number>(0);
+  const [Quantity, setQuantity] = useState<number>(1);
   const [Description, setDescription] = useState("");
 
   const HandleSubmit = (e: { preventDefault: () => void }) => {
