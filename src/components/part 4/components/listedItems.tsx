@@ -70,6 +70,19 @@ const ListedItems = ({ refreshList, refreshWindow }: ListedItemProps) => {
         return items;
     }
   };
+
+  const handleClearList = async () => {
+    try {
+      for (const item of listedItem) {
+        await fetch(`https://retoolapi.dev/GtUvs2/data/${item.id}`, {
+          method: "DELETE",
+        });
+        refreshList();
+      }
+    } catch (error) {
+      console.log("Error clearing list:", error);
+    }
+  };
   useEffect(() => {
     fetch("https://retoolapi.dev/GtUvs2/data")
       .then((res) => {
@@ -132,6 +145,7 @@ const ListedItems = ({ refreshList, refreshWindow }: ListedItemProps) => {
               fontSize: "10px",
               fontWeight: "bold",
             }}
+            onClick={handleClearList}
           >
             CLEAR LIST
           </button>

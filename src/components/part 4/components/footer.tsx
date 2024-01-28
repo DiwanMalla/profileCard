@@ -17,7 +17,7 @@ const Footer = ({ count, packed }: calculate) => {
         <p>
           <em>
             You have {count} items on your list, and you already packed {packed}{" "}
-            ({(packed / count) * 100}%)
+            ({((packed / count) * 100).toFixed(2)}%)
           </em>
         </p>
       </div>
