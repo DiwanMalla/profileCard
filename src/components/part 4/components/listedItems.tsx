@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Footer from "./footer";
 
 const options = [
   "Sort By Added",
@@ -18,6 +19,17 @@ interface ListedItemProps {
 }
 const ListedItems = ({ refreshList, refreshWindow }: ListedItemProps) => {
   const [listedItem, setListedItem] = useState<item[]>([]);
+  const [sortOption, setSortOption] = useState<string>(options[0]);
+  const [isPacked, setIsPacked] = useState(0);
+  const totalLength = listedItem.length;
+
+  useEffect(() => {
+    const packedCount = listedItem.reduce(
+      (count, item) => (item.packed ? count + 1 : count),
+      0
+    );
+    setIsPacked(packedCount);
+  }, [listedItem]);
 
   const handleDelete = async (itemId: number) => {
     try {
@@ -29,16 +41,6 @@ const ListedItems = ({ refreshList, refreshWindow }: ListedItemProps) => {
       console.error("Error deleting item:", error);
     }
   };
-
-  useEffect(() => {
-    fetch("https://retoolapi.dev/GtUvs2/data")
-      .then((res) => {
-        return res.json();
-      })
-      .then((data) => {
-        setListedItem(data);
-      });
-  }, [refreshWindow]);
 
   const handleCheckbox = (itemId: number) => {
     const updatedItem = listedItem.map((item) => {
@@ -55,6 +57,27 @@ const ListedItems = ({ refreshList, refreshWindow }: ListedItemProps) => {
     });
     setListedItem(updatedItem);
   };
+
+  const sortItems = (items: item[]) => {
+    switch (sortOption) {
+      case "Sort By Added":
+        return items.sort((a, b) => a.id - b.id);
+      case "Sort By Item Alphabet":
+        return items.sort((a, b) => a.Description.localeCompare(b.Description));
+      case "Sort By Packed Status":
+        return items.sort((a, b) => Number(a.packed) - Number(b.packed));
+    }
+  };
+  useEffect(() => {
+    fetch("https://retoolapi.dev/GtUvs2/data")
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        setListedItem(sortItems(data));
+      });
+  }, [refreshWindow, sortOption]);
+
   return (
     <div>
       <div id="wrapper" className="" style={{ backgroundColor: "#802b00" }}>
@@ -94,6 +117,7 @@ const ListedItems = ({ refreshList, refreshWindow }: ListedItemProps) => {
               fontSize: "10px",
               fontWeight: "bold",
             }}
+            onChange={(e) => setSortOption(e.target.value)}
           >
             {options.map((option, index) => (
               <option key={index}>{option}</option>
@@ -111,6 +135,7 @@ const ListedItems = ({ refreshList, refreshWindow }: ListedItemProps) => {
           </button>
         </div>
       </div>
+      <Footer count={totalLength} packed={isPacked} />
     </div>
   );
 };

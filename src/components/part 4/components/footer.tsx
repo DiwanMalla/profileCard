@@ -1,5 +1,8 @@
-const count = 0;
-const Footer = () => {
+interface calculate {
+  count: number;
+  packed: number;
+}
+const Footer = ({ count, packed }: calculate) => {
   return (
     <div>
       <div
@@ -13,7 +16,8 @@ const Footer = () => {
       >
         <p>
           <em>
-            You have {count} items on your list, and you already packed 0 (0%)
+            You have {count} items on your list, and you already packed {packed}{" "}
+            ({(packed / count) * 100}%)
           </em>
         </p>
       </div>

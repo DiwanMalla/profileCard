@@ -1,5 +1,5 @@
 import Combined from "./components/Combined";
-import Footer from "./components/footer";
+
 import Header from "./components/header";
 
 const TaskList = () => {
@@ -8,7 +8,6 @@ const TaskList = () => {
       <div>
         <Header />
         <Combined />
-        <Footer />
       </div>
     </div>
   );

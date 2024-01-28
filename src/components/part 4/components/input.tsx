@@ -11,15 +11,20 @@ const TripList = ({ onItemAdd }: TripListProps) => {
 
   const HandleSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
+
     const itemDetails = { Quantity, Description, packed: false };
     setTimeout(() => {
       fetch("https://retoolapi.dev/GtUvs2/data", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(itemDetails),
-      }).then(() => {
-        onItemAdd();
-      });
+      })
+        .then(() => {
+          onItemAdd();
+        })
+        .then(() => {
+          setDescription("");
+        });
     });
   };
 
@@ -50,6 +55,7 @@ const TripList = ({ onItemAdd }: TripListProps) => {
             placeholder="Item..."
             className="rounded-full pl-4"
             style={{ backgroundColor: "#ffebcc" }}
+            value={Description}
             onChange={(e) => {
               setDescription(e.target.value);
             }}

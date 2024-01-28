@@ -9,7 +9,7 @@ const Combined = () => {
   };
   return (
     <div>
-      <TripList onItemAdd={() => setRefreshList((prev) => !prev)} />
+      <TripList onItemAdd={refresh} />
       <ListedItems refreshList={refresh} refreshWindow={refreshList} />
     </div>
   );
