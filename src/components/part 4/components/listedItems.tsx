@@ -66,6 +66,8 @@ const ListedItems = ({ refreshList, refreshWindow }: ListedItemProps) => {
         return items.sort((a, b) => a.Description.localeCompare(b.Description));
       case "Sort By Packed Status":
         return items.sort((a, b) => Number(a.packed) - Number(b.packed));
+      default:
+        return items;
     }
   };
   useEffect(() => {
